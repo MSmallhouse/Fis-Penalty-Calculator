@@ -5,31 +5,30 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
+DATE = "2/27"
+URL = "https://www.skireg.com/Confirmed/6491"
+
+first_names = []
+last_names = []
+
 driver = webdriver.Chrome(executable_path="C:\chromedriver.exe")
 driver.implicitly_wait(0.5)
 driver.maximize_window()
-
-# launch URL
-driver.get("https://www.skireg.com/Confirmed/6491")
-# identify element
-l = driver.find_elements(By.LINK_TEXT, "+")
+driver.get(URL)
+l = driver.find_elements(By.CLASS_NAME, "day")
 
 # open each day, get names, then close
-for button in l:
-    button.click()
-    first_names = driver.find_elements(By.ID, "tdFirstName")
-    last_names = driver.find_elements(By.CSS_SELECTOR, "td.lastname")
-    for first, last in zip(first_names, last_names):
-        print(f"{first.text} {last.text}")
-    button.click()
+for entry in l:
+    if DATE not in entry.text:
+        continue
+
+    entry.click()
+    first_temp = driver.find_elements(By.ID, "tdFirstName")
+    last_temp = driver.find_elements(By.CSS_SELECTOR, "td.lastname")
+    for first, last in zip(first_temp, last_temp):
+        first_names.append(first.text)
+        last_names.append(last.text)
+    entry.click()
 
 driver.quit()
 
-
-#URL = "https://www.skireg.com/Confirmed/6491#"
-#page = requests.get(URL)
-
-#soup = BeautifulSoup(page.content, "html.parser")
-#first_name = soup.find(class_="event-participant")
-
-# print(soup)
