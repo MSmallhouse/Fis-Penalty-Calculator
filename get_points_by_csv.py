@@ -2,11 +2,12 @@
 import pandas as pd
 
 EVENT = "SL"
+CSV = "FIS-points-list-AL-2023-363.csv"
 
 first_names = ["Matthew", "Ben"]
 last_names = ["Smallhouse", "Charleston"]
 
-points_list = pd.read_csv("FIS-points-list-AL-2023-363.csv")
+points_list = pd.read_csv(CSV)
 info = points_list[["Lastname", "Firstname", EVENT+"points"]]
 
 relevant_points = pd.DataFrame()

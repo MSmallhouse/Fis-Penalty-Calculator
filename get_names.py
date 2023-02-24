@@ -1,7 +1,4 @@
-# get names from skireg
-
-# import requests
-# from bs4 import BeautifulSoup
+# get names of people racing for a given date
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
@@ -31,4 +28,3 @@ for entry in l:
     entry.click()
 
 driver.quit()
-
