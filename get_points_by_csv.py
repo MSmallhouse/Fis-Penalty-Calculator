@@ -1,15 +1,19 @@
 # get points by list for faster searching
 import pandas as pd
 
+EVENT = "SL"
+
 first_names = ["Matthew", "Ben"]
 last_names = ["Smallhouse", "Charleston"]
 
 points_list = pd.read_csv("FIS-points-list-AL-2023-363.csv")
-info = points_list[["Lastname", "Firstname", "SLpoints", "GSpoints"]]
+info = points_list[["Lastname", "Firstname", EVENT+"points"]]
 
-people = pd.DataFrame()
+relevant_points = pd.DataFrame()
 for first, last in zip(first_names, last_names):
+    #new_info = info[(info["Lastname"].str.lower() == last.lower()) & (info["Firstname"].str.lower() == first.lower())]
     new_info = info[(info["Lastname"].str.lower() == last.lower()) & (info["Firstname"].str.lower() == first.lower())]
-    people = pd.concat([people, new_info])
+    new_info = info.loc[(info["Lastname"].str.lower() == last.lower()) & (info["Firstname"].str.lower() == first.lower()), EVENT+"points"]
+    relevant_points = pd.concat([relevant_points, new_info])
 
-print(people)
+print(relevant_points)
